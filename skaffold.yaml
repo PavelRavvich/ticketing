@@ -1,0 +1,19 @@
+apiVersion: skaffold/v3
+kind: Config
+build:
+  artifacts:
+    - image: pravvich/auth
+      context: auth
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - ./inf/k8s/*
+deploy:
+  kubectl: {}
