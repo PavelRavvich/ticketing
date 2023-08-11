@@ -6,6 +6,7 @@ Requirements:
 - Docker (https://docs.docker.com/get-docker/)
 - Kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - Ingress-nginx (https://kubernetes.github.io/ingress-nginx/deploy/#quick-start)
+- Add secret `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<youre_jwt_secret_key>`
 - Skaffold (https://skaffold.dev/docs/install/)
 
 ## How to run
