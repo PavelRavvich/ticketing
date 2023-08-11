@@ -4,9 +4,9 @@ import { json } from 'body-parser';
 import mongoose from 'mongoose';
 import cookieSession from "cookie-session";
 
-import { sinnInRouter } from './routes/sign-in';
-import { sinnUpRouter } from './routes/sign-up';
-import { sinnOutRouter } from './routes/sign-out';
+import { signInRouter } from './routes/sign-in';
+import { signUpRouter } from './routes/sign-up';
+import { signOutRouter } from './routes/sign-out';
 import { currentUserRouter } from './routes/current-user';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from "./errors/not-found-error";
@@ -21,9 +21,9 @@ app.use(
   })
 );
 
-app.use(sinnInRouter);
-app.use(sinnUpRouter);
-app.use(sinnOutRouter);
+app.use(signUpRouter);
+app.use(signInRouter);
+app.use(signOutRouter);
 app.use(currentUserRouter);
 
 app.all('*', async (): Promise<void> => {
