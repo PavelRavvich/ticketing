@@ -7,8 +7,10 @@ export const requireAuth = (
   res: Response,
   next: NextFunction
 ): void => {
+
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
+
   next();
 };
