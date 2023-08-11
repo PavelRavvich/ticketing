@@ -1,32 +1,27 @@
-import express, { Request, Response } from "express";
-import { body, Result, validationResult } from "express-validator";
+import express, { Request, Response, Router } from "express";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { ValidationError } from "express-validator/src/base";
+import { validateRequest } from "../middlewares/validate-request";
 import { BadRequestError } from "../errors/bad-request-error";
-import { RequestValidationError } from "../errors/request-validation-error-request";
 import { User } from "../models/user";
 
 
-const router = express.Router();
+const router: Router = express.Router();
 
 router.post(
-  "/api/users/signUp", [
+  "/api/users/signUp",
+  [
     body("email")
       .isEmail()
       .withMessage("Email must be valid"),
     body("password")
       .trim()
       .isLength({ min: 8, max: 20 })
-      .withMessage("Password must be between 8 and 20 characters")
+      .withMessage("Password must be between 8 and 20 characters"),
   ],
-  async (req: Request, res: Response) => {
-    const errors: Result<ValidationError> = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
+  validateRequest,
+  async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -51,4 +46,4 @@ router.post(
     res.status(201).send(user);
   });
 
-export { router as sinnUpRouter };
+export { router as signUpRouter };
