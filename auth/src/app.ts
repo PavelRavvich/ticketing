@@ -2,13 +2,12 @@ import express, { Express } from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from "cookie-session";
+import { errorHandler, NotFoundError } from "@pravvich-tickets/common";
 
-import { signInRouter } from './routes/sign-in';
-import { signUpRouter } from './routes/sign-up';
-import { signOutRouter } from './routes/sign-out';
-import { currentUserRouter } from './routes/current-user';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from "./errors/not-found-error";
+import { signInRouter } from "./routes/sign-in";
+import { signUpRouter } from "./routes/sign-up";
+import { signOutRouter } from "./routes/sign-out";
+import { currentUserRouter } from "./routes/current-user";
 
 const app: Express = express();
 app.set('trust proxy', true);

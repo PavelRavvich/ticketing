@@ -26,7 +26,7 @@ const userSchema: Schema = new mongoose.Schema({
   }
 }, {
   toJSON: {
-    transform(_, ret): void {
+    transform(doc: mongoose.Document, ret: Record<string, any>): void {
       ret.id = ret._id;
       delete ret.__v;
       delete ret._id;
