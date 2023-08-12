@@ -1,4 +1,7 @@
 # Ticketing (P2P exchange)
+
+[![Run Node.js Tests](https://github.com/PavelRavvich/ticketing/actions/workflows/ci.yaml/badge.svg)](https://github.com/PavelRavvich/ticketing/actions/workflows/ci.yaml)
+
 Ticketing is a microservices application that allows users to buy and sell tickets to events. It is built using Node.js, Express, NATS, React, and MongoDB.
 
 Requirements:
