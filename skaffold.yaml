@@ -2,6 +2,15 @@ apiVersion: skaffold/v3
 kind: Config
 build:
   artifacts:
+    - image: pravvich/client
+      context: client
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+
     - image: pravvich/auth
       context: auth
       sync:
@@ -10,6 +19,7 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+
   local:
     push: false
 manifests:
