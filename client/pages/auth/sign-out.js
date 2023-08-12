@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Router from "next/router";
 import useRequest from "../../hooks/use-request";
+import Loader from "../../components/loader";
 
 function SignOut() {
   const { doRequest } = useRequest({
@@ -14,7 +15,7 @@ function SignOut() {
     doRequest();
   }, []);
 
-  return <div>Signing you out...</div>;
+  return <Loader text="Signing you out..." />;
 }
 
 export default SignOut;

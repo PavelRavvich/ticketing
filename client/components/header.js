@@ -19,7 +19,7 @@ function Header({ currentUser }) {
 
   return (
     <nav className="navbar navbar-light bg-light">
-      <Link className="navbar-brand" href="/">
+      <Link href="/" className="navbar-brand" style={{ paddingLeft: '1rem' }}>
         Ticketing
       </Link>
 
