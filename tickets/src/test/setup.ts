@@ -1,6 +1,8 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from "jsonwebtoken";
+import request from "supertest";
+import { app } from "../app";
 
 
 let mongo: MongoMemoryServer;
@@ -28,13 +30,26 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-const id = new mongoose.Types.ObjectId().toHexString();
-export const signIn = (): string[] => {
+const TEST_AUTH = {
+  email: "test@test.com",
+  id: new mongoose.Types.ObjectId().toHexString(),
+};
+export const signIn = (id?: string, email?: string): string[] => {
   const token = jwt.sign({
-    id: id,
-    email: "test@test.com"
+    id: id || TEST_AUTH.id,
+    email: email || TEST_AUTH.email
   }, process.env.JWT_KEY!);
   const sessionJSON = JSON.stringify({ jwt: token });
   const base64Session = Buffer.from(sessionJSON).toString("base64");
   return [`session=${base64Session}`];
+};
+
+export const createTicket = (cookies: string[], title: string, price: number): Promise<any> => {
+  return request(app)
+    .post('/api/tickets')
+    .set('Cookie', cookies)
+    .send({
+      title,
+      price,
+    });
 };

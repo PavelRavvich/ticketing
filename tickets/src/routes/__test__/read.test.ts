@@ -1,17 +1,8 @@
 import request from "supertest";
-import { app } from "../../app";
-import { signIn } from "../../test/setup";
 import mongoose from "mongoose";
+import { app } from "../../app";
+import { createTicket, signIn } from "../../test/setup";
 
-const createTicket = (cookies: string[], title: string, price: number): Promise<any> => {
-  return request(app)
-    .post('/api/tickets')
-    .set('Cookie', cookies)
-    .send({
-      title,
-      price,
-    });
-};
 
 it("returns a 404 if the ticket is not found", async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
