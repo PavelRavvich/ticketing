@@ -20,6 +20,15 @@ build:
       docker:
         dockerfile: Dockerfile
 
+    - image: pravvich/tickets
+      context: tickets
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+
   local:
     push: false
 manifests:
