@@ -28,9 +28,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+const id = new mongoose.Types.ObjectId().toHexString();
 export const signIn = (): string[] => {
   const token = jwt.sign({
-    id: "1",
+    id: id,
     email: "test@test.com"
   }, process.env.JWT_KEY!);
   const sessionJSON = JSON.stringify({ jwt: token });
