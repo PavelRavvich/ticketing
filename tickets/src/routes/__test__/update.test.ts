@@ -28,8 +28,8 @@ it("returns a 401 if the does not authenticated", async () => {
 });
 
 it("returns a 401 if the does not own the ticket", async () => {
-  const firstUserCookie = signIn(new mongoose.Types.ObjectId().toHexString());
-  const secondUserCookie = signIn(new mongoose.Types.ObjectId().toHexString());
+  const firstUserCookie = signIn();
+  const secondUserCookie = signIn();
   const title = "title";
   const price = 20;
 
@@ -80,7 +80,7 @@ it("updates the ticket provided valid input", async () => {
 
   await request(app)
     .put(`/api/tickets/${response.body.id}`)
-    .set("Cookie", signIn())
+    .set("Cookie", cookie)
     .send({
       title: "title2",
       price: 40,

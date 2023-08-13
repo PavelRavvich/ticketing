@@ -30,14 +30,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-const TEST_AUTH = {
-  email: "test@test.com",
-  id: new mongoose.Types.ObjectId().toHexString(),
-};
-export const signIn = (id?: string, email?: string): string[] => {
+export const signIn = (): string[] => {
   const token = jwt.sign({
-    id: id || TEST_AUTH.id,
-    email: email || TEST_AUTH.email
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: "test@test.com"
   }, process.env.JWT_KEY!);
   const sessionJSON = JSON.stringify({ jwt: token });
   const base64Session = Buffer.from(sessionJSON).toString("base64");
