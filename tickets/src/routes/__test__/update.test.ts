@@ -77,7 +77,7 @@ it("updates the ticket provided valid input", async () => {
 
   const response = await createTicket(cookie, title, price)
 
-  await request(app)
+  const updatedTicket = await request(app)
     .put(`/api/tickets/${response.body.id}`)
     .set("Cookie", cookie)
     .send({
@@ -91,6 +91,8 @@ it("updates the ticket provided valid input", async () => {
     .send()
     .expect(200);
 
+  expect(updatedTicket.body.title).toEqual("title2");
+  expect(updatedTicket.body.price).toEqual(40);
   expect(ticketResponse.body.title).toEqual("title2");
   expect(ticketResponse.body.price).toEqual(40);
 });
