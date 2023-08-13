@@ -3,6 +3,7 @@ import { requireAuth, validateRequest } from "@pravvich-tickets/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/ticket";
 
+
 const router: Router = express.Router();
 
 router.post(

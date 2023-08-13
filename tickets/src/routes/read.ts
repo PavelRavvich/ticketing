@@ -2,6 +2,7 @@ import express, { Request, Response, Router } from "express";
 import { NotFoundError } from "@pravvich-tickets/common";
 import { Ticket } from "../models/ticket";
 
+
 const router: Router = express.Router();
 
 router.get("/api/tickets", async (req: Request, res: Response) => {
