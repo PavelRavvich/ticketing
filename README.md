@@ -13,6 +13,12 @@ Requirements:
 - Add secret `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<youre_jwt_secret_key>`
 - Skaffold (https://skaffold.dev/docs/install/)
 
+### How to update common module
+1. Increment `version` prop in `package.json` in `common` module and commit changes.
+2. Delete `/build/` folder in `common` module.
+3. Run `$ tsc` in `common` module.
+4. Run `$ npm publish` in `common` module.
+
 ## How to run
 ### Development
 1. Clone this repo
