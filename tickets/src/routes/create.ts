@@ -1,7 +1,10 @@
 import express, { Request, Response, Router } from "express";
-import { requireAuth, validateRequest } from "@pravvich-tickets/common";
+import { requireAuth, TicketCreatedEvent, validateRequest } from "@pravvich-tickets/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/ticket";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
+import { natsWrapper } from "../events/nats-wrapper";
+import { Stan } from "node-nats-streaming";
 
 
 const router: Router = express.Router();
@@ -30,9 +33,16 @@ router.post(
       userId,
     });
 
-    const createdTicket = await ticket.save();
+    await ticket.save();
 
-    res.status(201).send(createdTicket);
+    await new TicketCreatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
+
+    res.status(201).send(ticket);
   }
 );
 
