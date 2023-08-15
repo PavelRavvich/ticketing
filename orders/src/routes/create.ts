@@ -22,7 +22,7 @@ router.post(
       .withMessage("TicketId must be provided"),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
 
     const { ticketId } = req.body;
     const ticket = await Ticket.findById(ticketId);
