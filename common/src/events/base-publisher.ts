@@ -10,7 +10,7 @@ export abstract class Publisher<T extends Event> {
   abstract subject: T['subject']
   private client: Stan;
 
-  protected constructor(client: Stan) {
+  public constructor(client: Stan) {
     this.client = client;
   }
 
