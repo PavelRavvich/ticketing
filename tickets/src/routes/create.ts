@@ -1,10 +1,9 @@
 import express, { Request, Response, Router } from "express";
-import { requireAuth, TicketCreatedEvent, validateRequest } from "@pravvich-tickets/common";
+import { requireAuth, validateRequest } from "@pravvich-tickets/common";
 import { body } from "express-validator";
 import { Ticket } from "../models/ticket";
 import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
-import { natsWrapper } from "../events/nats-wrapper";
-import { Stan } from "node-nats-streaming";
+import { natsWrapper } from "../nats-wrapper";
 
 
 const router: Router = express.Router();

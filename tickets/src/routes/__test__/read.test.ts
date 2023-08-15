@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import { app } from "../../app";
 import { createTicket, signIn } from "../../test/setup";
 
-
 it("returns a 404 if the ticket is not found", async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
   await request(app)

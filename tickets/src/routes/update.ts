@@ -7,7 +7,7 @@ import {
   NotFoundError,
   NotAuthorizedError,
 } from "@pravvich-tickets/common";
-import { natsWrapper } from "../events/nats-wrapper";
+import { natsWrapper } from "../nats-wrapper";
 import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-event";
 
 
