@@ -4,9 +4,10 @@ import { json } from 'body-parser';
 import cookieSession from "cookie-session";
 import { errorHandler, NotFoundError, currentUser } from "@pravvich-tickets/common";
 
-// import { createTicketRouter } from './routes/create';
-// import { readTicketRouter } from './routes/read';
-// import { updateTicketRouter } from './routes/update';
+import { createOrderRouter } from './routes/create';
+import { readOrderRouter } from './routes/read';
+import { updateOrderRouter } from './routes/update';
+import { deleteOrderRouter } from './routes/delete';
 
 const app: Express = express();
 app.set('trust proxy', true);
@@ -19,9 +20,10 @@ app.use(
 );
 app.use(currentUser);
 
-// app.use(createTicketRouter);
-// app.use(readTicketRouter);
-// app.use(updateTicketRouter);
+app.use(createOrderRouter);
+app.use(readOrderRouter);
+app.use(updateOrderRouter);
+app.use(deleteOrderRouter);
 
 app.all('*', async (): Promise<void> => {
   throw new NotFoundError();
