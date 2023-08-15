@@ -7,6 +7,8 @@ import {
   NotFoundError,
   NotAuthorizedError,
 } from "@pravvich-tickets/common";
+import { natsWrapper } from "../events/nats-wrapper";
+import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-event";
 
 
 const router: Router = express.Router();
@@ -26,26 +28,33 @@ router.put(
   validateRequest,
   async (req: Request, res: Response) => {
 
-      const { title, price } = req.body;
+    const { title, price } = req.body;
 
-      const ticket = await Ticket.findById(req.params.id);
+    const ticket = await Ticket.findById(req.params.id);
 
-      if (!ticket) {
-        throw new NotFoundError();
-      }
+    if (!ticket) {
+      throw new NotFoundError();
+    }
 
-      if (ticket.userId !== req.currentUser!.id) {
-        throw new NotAuthorizedError();
-      }
+    if (ticket.userId !== req.currentUser!.id) {
+      throw new NotAuthorizedError();
+    }
 
-      ticket.set({
-        title,
-        price,
-      });
+    ticket.set({
+      title,
+      price,
+    });
 
-      const updatedTicket = await ticket.save();
+    await ticket.save();
 
-      res.status(200).send(updatedTicket);
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
+
+    res.status(200).send(ticket);
   }
 );
 
