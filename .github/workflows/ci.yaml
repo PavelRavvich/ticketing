@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        directory: ['auth', 'tickets']
+        directory: ['auth', 'tickets', 'orders']
 
     steps:
       - name: Checkout code

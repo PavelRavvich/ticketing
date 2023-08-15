@@ -29,6 +29,15 @@ build:
       docker:
         dockerfile: Dockerfile
 
+    - image: pravvich/orders
+      context: orders
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+
   local:
     push: false
 manifests:
