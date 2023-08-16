@@ -4,6 +4,7 @@ import { Ticket } from "../../models/ticket";
 import { signIn } from "../../test/setup";
 import { OrderStatus } from "@pravvich-tickets/common";
 import mongoose from "mongoose";
+import { natsWrapper } from "../../nats-wrapper";
 
 it('marks an order as cancelled', async () => {
   const ticket = Ticket.build({
@@ -68,4 +69,27 @@ it("returns an error if user tries to cancel order with invalid id", async () =>
     .set('Cookie', user)
     .send()
     .expect(400);
+});
+
+it("publishes an order cancelled event", async () => {
+  const ticket = Ticket.build({
+    title: 'concert',
+    price: 20
+  });
+  await ticket.save();
+
+  const user = signIn();
+  const { body: order } = await request(app)
+    .post('/api/orders')
+    .set('Cookie', user)
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  await request(app)
+    .patch(`/api/orders/${order.id}`)
+    .set('Cookie', user)
+    .send()
+    .expect(200);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
