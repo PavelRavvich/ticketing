@@ -13,7 +13,7 @@ export abstract class Listener<T extends Event> {
   private client: Stan;
   protected ackWait: number = 5 * 1000;
 
-  protected constructor(client: Stan) {
+  public constructor(client: Stan) {
     this.client = client;
   }
 
