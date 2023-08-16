@@ -7,7 +7,6 @@ import { errorHandler, NotFoundError, currentUser } from "@pravvich-tickets/comm
 import { createOrderRouter } from './routes/create';
 import { readOrderRouter } from './routes/read';
 import { updateOrderRouter } from './routes/update';
-import { deleteOrderRouter } from './routes/delete';
 
 const app: Express = express();
 app.set('trust proxy', true);
@@ -23,7 +22,6 @@ app.use(currentUser);
 app.use(createOrderRouter);
 app.use(readOrderRouter);
 app.use(updateOrderRouter);
-app.use(deleteOrderRouter);
 
 app.all('*', async (): Promise<void> => {
   throw new NotFoundError();
