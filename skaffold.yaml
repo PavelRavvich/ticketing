@@ -38,6 +38,15 @@ build:
       docker:
         dockerfile: Dockerfile
 
+    - image: pravvich/expiration
+      context: expiration
+      sync:
+        manual:
+          - src: src/**/*.ts
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+
   local:
     push: false
 manifests:
