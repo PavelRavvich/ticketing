@@ -13,15 +13,17 @@ export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   version: number;
-
   isReserved(): Promise<boolean>;
 }
 
 interface TicketModel extends mongoose.Model<TicketDoc> {
   build(attrs: TicketAttrs): TicketDoc;
-
-  findByIdAndPreviousVersion(event: { id: string, version: number }): Promise<TicketDoc | null>;
+  findByIdAndPreviousVersion(event: {
+    id: string,
+    version: number
+  }): Promise<TicketDoc | null>;
 }
+
 
 const ticketSchema: mongoose.Schema = new mongoose.Schema({
   title: {
