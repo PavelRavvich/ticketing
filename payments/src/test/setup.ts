@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 let mongo: MongoMemoryServer;
 
 jest.mock("../nats-wrapper");
+jest.mock("../stripe");
 
 beforeAll(async (): Promise<void> => {
   process.env.JWT_KEY = "test-jwt-key";
@@ -30,9 +31,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-export const signIn = (): string[] => {
+export const signIn = (id?: string): string[] => {
   const token = jwt.sign({
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com"
   }, process.env.JWT_KEY!);
   const sessionJSON = JSON.stringify({ jwt: token });

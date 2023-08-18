@@ -10,7 +10,9 @@ Requirements:
 - Kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - Minikube (https://kubernetes.io/docs/tasks/tools/install-minikube/)
 - Ingress-nginx (https://kubernetes.github.io/ingress-nginx/deploy/#quick-start)
-- Add secret `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<youre_jwt_secret_key>`
+- Add secret for [stripe](https://dashboard.stripe.com/test/apikeys) and jwt
+    * `kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<youre_jwt_secret_key>`
+    * `kubectl create secret generic stripe-secret --from-literal STRIPE_KEY=<youre_stripe_secret_key>`
 - Skaffold (https://skaffold.dev/docs/install/)
 
 ### How to update common module
