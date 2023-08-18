@@ -1,14 +1,42 @@
-import buildClient from "../api/build-client";
+import Link from "next/link";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
 
-const LandingPage = function LandingPage({ currentUser }) {
-  return currentUser ? (<h1>You are signed in</h1>) : (<h1>You are NOT signed in</h1>);
+const LandingPage = function LandingPage({ currentUser, tickets }) {
+  const ticketList = tickets.map(ticket => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href={`/tickets/[ticketId]`} as={`/tickets/${ticket.id}`}>
+            <span>Link</span>
+          </Link>
+        </td>
+      </tr>
+    )
+  });
+  return (
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+        {ticketList}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
-LandingPage.getInitialProps = async function getInitialProps(context) {
-  const client = buildClient(context);
-  const { data } = await client.get('/api/users/currentUser');
-
-  return data;
+LandingPage.getInitialProps = async function getInitialProps(context, client, currentUser) {
+  const { data } = await client.get('/api/tickets');
+  return { tickets: data };
 };
 
 export default LandingPage;
